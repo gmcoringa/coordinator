@@ -1,0 +1,24 @@
+# Maven
+reports/
+target/
+
+# Eclipse
+.settings/
+.metadata/
+.classpath
+.project
+
+# Gradle
+bin/
+build/
+.gradle/
+
+# Idea
+.idea/
+out/
+*.iml
+*.ipr
+*.iws
+
+# Vim ignore files
+*.swp

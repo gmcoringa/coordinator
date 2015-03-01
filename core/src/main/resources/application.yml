@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: Coordinator
+
+---
+spring:
+  profiles: development
+
+zookeeper:
+  hosts: localhost:2181
+  connection:
+    retries: 3
+    timeout: 5000
+  session:
+    timeout: 60000

@@ -1,0 +1,85 @@
+buildscript {
+
+  repositories { mavenCentral() }
+
+  dependencies {
+      classpath('org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE')
+  }
+}
+
+allprojects { 
+  apply plugin: "idea" 
+}
+
+subprojects {
+
+  group = 'gmcoringa-coordinator'
+  version = '0.0.1'
+
+  repositories {
+      mavenCentral()
+  }
+
+  apply plugin: 'java'
+  apply plugin: 'eclipse-wtp'
+
+  archivesBaseName = 'coordinator'
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+
+}
+
+// Dependencies
+List SPRING = ['org.springframework.boot:spring-boot-starter:1.2.1.RELEASE', 'org.springframework.boot:spring-boot-starter-undertow:1.2.1.RELEASE', 
+  'org.springframework.boot:spring-boot-starter-freemarker:1.2.1.RELEASE']
+
+List TEST = ['junit:junit:4.12', 'org.mockito:mockito-core:1.10.19', 'org.springframework:spring-boot-starter-test:1.2.1.RELEASE']
+
+List LOGBACK = ['ch.qos.logback:logback-classic:1.1.2', 'ch.qos.logback:logback-core:1.1.2']
+
+def SLF4J = "org.slf4j:slf4j-api:1.7.10"
+
+configurations {
+  all*.exclude group: 'log4j'
+}
+
+// Projects
+project(':common'){ 
+  jar {
+    appendix = 'common'
+  }
+
+  description = 'Common Dependencies'
+}
+
+project(':core'){
+  apply plugin: 'war'
+  apply plugin: 'spring-boot'
+
+  description = 'Coordinator Core'
+
+  dependencies {
+
+    compile project(':common'), SPRING, SLF4J, 'org.apache.curator:curator-framework:2.7.1'
+
+    runtime LOGBACK
+
+    testCompile TEST
+  }
+}
+
+project(':api'){ 
+  jar {
+    appendix = 'api'
+  }
+
+  description = 'Coordinator Rest API'
+
+  dependencies {
+
+    compile project(':common'), SLF4J
+
+    runtime LOGBACK
+  }
+
+}
