@@ -1,4 +1,4 @@
-package com.github.gmcoringa.coordinator.core.znode;
+package com.github.gmcoringa.coordinator.core.zookeeper;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -13,7 +13,7 @@ public class CuratorClientFactory {
 	@Bean
 	public CuratorFramework client(@Value("${zookeeper.hosts}") String hosts,
 			@Value("${zookeeper.connection.retries:3}") int retries,
-			@Value("${zookeeper.connection.timeout:15000}") int connectionTimeout,
+			@Value("${zookeeper.connection.timeoutMS:15000}") int connectionTimeout,
 			@Value("${zookeeper.session.timeout:60000}") int sessionTimeout) {
 
 		ExponentialBackoffRetry retryPolicy = new ExponentialBackoffRetry(1000, retries);

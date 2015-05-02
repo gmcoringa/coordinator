@@ -2,14 +2,17 @@ spring:
   application:
     name: Coordinator
 
+zookeeper:
+  connection:
+    retries: 3
+    timeoutMS: 5000
+  session:
+    timeout: 60000
+
 ---
 spring:
   profiles: development
 
 zookeeper:
   hosts: localhost:2181
-  connection:
-    retries: 3
-    timeout: 5000
-  session:
-    timeout: 60000
+

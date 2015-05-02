@@ -1,4 +1,4 @@
-package com.github.gmcoringa.coordinator.core.znode;
+package com.github.gmcoringa.coordinator.core.zookeeper.node;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.slf4j.Logger;
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import com.github.gmcoringa.coordinator.common.ZNode;
 
 @Service
-public class ZNodeService {
+public class NodeService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ZNodeService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(NodeService.class);
 	private final CuratorFramework client;
 
 	@Autowired
-	public ZNodeService(CuratorFramework client) {
+	public NodeService(CuratorFramework client) {
 		this.client = client;
 	}
 

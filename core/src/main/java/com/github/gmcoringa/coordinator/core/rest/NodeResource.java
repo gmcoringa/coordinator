@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.gmcoringa.coordinator.common.ZNode;
-import com.github.gmcoringa.coordinator.core.znode.ZNodeService;
+import com.github.gmcoringa.coordinator.core.zookeeper.node.NodeService;
 
 @RestController("Node")
 @RequestMapping("/api/node")
-public class ZNodeResource {
+public class NodeResource {
 
-	private final ZNodeService zNodeService;
+	private final NodeService zNodeService;
 
 	@Autowired
-	public ZNodeResource(ZNodeService zNodeService) {
+	public NodeResource(NodeService zNodeService) {
 		this.zNodeService = zNodeService;
 	}
 
