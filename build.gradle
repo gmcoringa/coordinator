@@ -1,13 +1,15 @@
 buildscript {
 
+  ext.SPRING_BOOT_VERSION = "1.2.3.RELEASE"
+
   repositories { mavenCentral() }
 
   dependencies {
-      classpath('org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE')
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${SPRING_BOOT_VERSION}")
   }
 }
 
-allprojects { 
+allprojects {
   apply plugin: "idea" 
   apply plugin: 'java'
   apply plugin: 'eclipse-wtp'
@@ -29,13 +31,13 @@ subprojects {
 }
 
 // Dependencies
-List SPRING = ['org.springframework.boot:spring-boot-starter-web:1.2.2.RELEASE', 'org.springframework.boot:spring-boot-starter-undertow:1.2.2.RELEASE', 
-  'org.springframework.boot:spring-boot-starter-freemarker:1.2.2.RELEASE']
-List TEST = ['junit:junit:4.12', 'org.mockito:mockito-core:1.10.19', 'org.springframework:spring-boot-starter-test:1.2.2.RELEASE']
-List LOGBACK = ['ch.qos.logback:logback-classic:1.1.2', 'ch.qos.logback:logback-core:1.1.2']
+def SPRING_BOOT_VERSION = "1.2.3.RELEASE"
+List SPRING = ["org.springframework.boot:spring-boot-starter-web:${SPRING_BOOT_VERSION}", "org.springframework.boot:spring-boot-starter-undertow:${SPRING_BOOT_VERSION}",
+  "org.springframework.boot:spring-boot-starter-freemarker:${SPRING_BOOT_VERSION}"]
+List TEST = ["junit:junit:4.12", "org.mockito:mockito-core:1.10.19", "org.springframework.boot:spring-boot-starter-test:${SPRING_BOOT_VERSION}"]
+List LOGBACK = ["ch.qos.logback:logback-classic:1.1.2", "ch.qos.logback:logback-core:1.1.2"]
 
 def SLF4J = "org.slf4j:slf4j-api:1.7.10"
-
 
 // Projects
 project(':common'){ 
@@ -47,8 +49,11 @@ project(':common'){
 }
 
 project(':core'){
-  apply plugin: 'war'
   apply plugin: 'spring-boot'
+
+  jar {
+    appendix = 'common'
+  }
 
   description = 'Coordinator Core'
 

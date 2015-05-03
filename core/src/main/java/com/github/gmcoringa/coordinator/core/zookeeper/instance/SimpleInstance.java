@@ -31,11 +31,11 @@ public class SimpleInstance {
             return true;
         }
 
-        if (!(object instanceof ZookeeperInstance)) {
+        if (!(object instanceof SimpleInstance)) {
             return false;
         }
 
-        ZookeeperInstance instance = (ZookeeperInstance) object;
+        SimpleInstance instance = (SimpleInstance) object;
 
         return Objects.equals(host, instance.getHost()) &&
                 Objects.equals(port, instance.getPort());
