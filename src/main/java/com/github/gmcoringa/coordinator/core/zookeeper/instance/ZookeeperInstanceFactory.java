@@ -1,5 +1,6 @@
 package com.github.gmcoringa.coordinator.core.zookeeper.instance;
 
+import com.github.gmcoringa.coordinator.core.zookeeper.exception.ZookeeperException;
 import com.google.common.base.Strings;
 
 import java.util.HashSet;
@@ -33,10 +34,9 @@ public class ZookeeperInstanceFactory {
     private static SimpleInstance createSimpleInstance(String instance) {
         String[] instanceString = instance.split(":");
 
-        // TODO fix exceptions
         if (instanceString.length <= 1 || Strings.isNullOrEmpty(instanceString[0]) ||
                 Strings.isNullOrEmpty(instanceString[1])) {
-            throw new RuntimeException("Expected host:port for host connection, but found: " + instance);
+            throw new ZookeeperException("Expected host:port for host connection, but found: " + instance);
         }
 
         return new SimpleInstance(instanceString[0], Integer.parseInt(instanceString[1]));

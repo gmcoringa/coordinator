@@ -3,6 +3,7 @@ spring:
     name: Coordinator
 
 zookeeper:
+  hosts: ${ZK_QUORUM}
   connection:
     retries: 3
     timeoutMS: 5000

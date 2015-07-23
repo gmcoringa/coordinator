@@ -1,88 +1,55 @@
 buildscript {
+    ext.SPRING_BOOT_VERSION = "1.2.3.RELEASE"
 
-  ext.SPRING_BOOT_VERSION = "1.2.3.RELEASE"
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
 
-  repositories { mavenCentral() }
-
-  dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:${SPRING_BOOT_VERSION}")
-  }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${SPRING_BOOT_VERSION}")
+    }
 }
 
-allprojects {
-  apply plugin: "idea" 
-  apply plugin: 'java'
-  apply plugin: 'eclipse-wtp'
-  
-  sourceCompatibility = 1.8
-  targetCompatibility = 1.8
-}
+apply plugin: "idea"
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'spring-boot'
 
-subprojects {
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
-  group = 'gmcoringa-coordinator'
-  version = '0.0.1'
+group = 'gmcoringa-coordinator'
+version = '0.0.1'
+archivesBaseName = 'coordinator'
 
-  repositories {
-      mavenCentral()
-  }
-
-  archivesBaseName = 'coordinator'
+repositories {
+    mavenLocal()
+    mavenCentral()
 }
 
 // Dependencies
 def SPRING_BOOT_VERSION = "1.2.3.RELEASE"
-List SPRING = ["org.springframework.boot:spring-boot-starter-web:${SPRING_BOOT_VERSION}", "org.springframework.boot:spring-boot-starter-undertow:${SPRING_BOOT_VERSION}",
-  "org.springframework.boot:spring-boot-starter-freemarker:${SPRING_BOOT_VERSION}"]
-List TEST = ["junit:junit:4.12", "org.mockito:mockito-core:1.10.19", "org.springframework.boot:spring-boot-starter-test:${SPRING_BOOT_VERSION}"]
+def SLF4J = "org.slf4j:slf4j-api:1.7.10"
+List SPRING = ["org.springframework.boot:spring-boot-starter-web:${SPRING_BOOT_VERSION}",
+               "org.springframework.boot:spring-boot-starter-undertow:${SPRING_BOOT_VERSION}",
+               "org.springframework.boot:spring-boot-starter-freemarker:${SPRING_BOOT_VERSION}"]
+List TEST = ["junit:junit:4.12", "org.mockito:mockito-core:1.10.19",
+             "org.springframework.boot:spring-boot-starter-test:${SPRING_BOOT_VERSION}"]
 List LOGBACK = ["ch.qos.logback:logback-classic:1.1.2", "ch.qos.logback:logback-core:1.1.2"]
 
-def SLF4J = "org.slf4j:slf4j-api:1.7.10"
+// Project definition
 
-// Projects
-project(':common'){ 
-  jar {
-    appendix = 'common'
-  }
-
-  description = 'Common Dependencies'
-}
-
-project(':core'){
-  apply plugin: 'spring-boot'
-
-  jar {
-    appendix = 'common'
-  }
-
-  description = 'Coordinator Core'
-
-  dependencies {
-
-    compile project(':common'), SPRING, SLF4J, 'org.apache.curator:curator-framework:2.7.1'
-
+dependencies {
+    compile SPRING, SLF4J, 'org.apache.curator:curator-framework:2.7.1'
     runtime LOGBACK
-
     testCompile TEST
-  }
+}
 
-  configurations {
+configurations {
     all*.exclude group: 'log4j'
-  }
 }
 
-project(':api'){ 
-  jar {
-    appendix = 'api'
-  }
-
-  description = 'Coordinator Rest API'
-
-  dependencies {
-
-    compile project(':common'), SLF4J
-
-    runtime LOGBACK
-  }
-
-}
+// Run - default configuration
+applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005",
+                "-Dspring.profiles.active=development"]

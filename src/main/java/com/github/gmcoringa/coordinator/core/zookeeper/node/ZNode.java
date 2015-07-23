@@ -1,9 +1,9 @@
-package com.github.gmcoringa.coordinator.common;
+package com.github.gmcoringa.coordinator.core.zookeeper.node;
 
 import java.util.List;
 
 public class ZNode {
-	
+
 	private final String path;
 	private final List<String> children;
 
