@@ -11,14 +11,13 @@ public class ZookeeperInstanceFactory {
 
 
     public static ZookeeperInstance createFromStatusResponseMap(String host, int port, Map<String, String> response) {
-        int id = Integer.parseInt(response.getOrDefault("Zxid", "0"));
-        Mode mode = Mode.valueOf(response.getOrDefault("Mode", "unknown").toUpperCase());
-        Status status = Status.valueOf(response.getOrDefault("status", Status.UNSTABLE.name()).toUpperCase());
-        return new ZookeeperInstance(id, host, port, mode, status);
+        Mode mode = Mode.valueOf(response.getOrDefault("Mode", "unknown").toUpperCase().trim());
+        Status status = Status.valueOf(response.getOrDefault("status", Status.UNSTABLE.name()).toUpperCase().trim());
+        return new ZookeeperInstance(host, port, mode, status);
     }
 
     public static ZookeeperInstance createDeadInstance(String host, int port) {
-        return new ZookeeperInstance(0, host, port, Mode.UNKNOWN, Status.DEAD);
+        return new ZookeeperInstance(host, port, Mode.UNKNOWN, Status.DEAD);
     }
 
     public static Set<SimpleInstance> createSimpleInstances(String connectionString) {

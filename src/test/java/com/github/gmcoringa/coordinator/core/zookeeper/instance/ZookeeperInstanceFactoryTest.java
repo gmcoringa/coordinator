@@ -12,18 +12,17 @@ public class ZookeeperInstanceFactoryTest {
 
     @Test
     public void shouldCreateDeadInstance() {
-        ZookeeperInstance instance = new ZookeeperInstance(0, "deadHost", 2181, Mode.UNKNOWN, Status.DEAD);
+        ZookeeperInstance instance = new ZookeeperInstance("deadHost", 2181, Mode.UNKNOWN, Status.DEAD);
         Assert.assertEquals(instance, ZookeeperInstanceFactory.createDeadInstance("deadHost", 2181));
     }
 
     @Test
     public void shouldCreateLiveInstanceFromResponseMap() {
         Map<String, String> responseMap = new HashMap<>(4);
-        responseMap.put("Zxid", "1");
-        responseMap.put("Mode", "standalone");
+        responseMap.put("Mode", " standalone");
         responseMap.put("status", Status.LIVE.name());
 
-        ZookeeperInstance instance = new ZookeeperInstance(1, "liveHost", 2181, Mode.STANDALONE, Status.LIVE);
+        ZookeeperInstance instance = new ZookeeperInstance("liveHost", 2181, Mode.STANDALONE, Status.LIVE);
         Assert.assertEquals(instance, ZookeeperInstanceFactory.createFromStatusResponseMap("liveHost", 2181, responseMap));
     }
 

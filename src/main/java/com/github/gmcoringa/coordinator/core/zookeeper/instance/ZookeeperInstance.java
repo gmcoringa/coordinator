@@ -4,19 +4,13 @@ import java.util.Objects;
 
 public class ZookeeperInstance extends SimpleInstance {
 
-    private final int id;
     private final Mode mode;
     private final Status status;
 
-    public ZookeeperInstance(int id, String host, int port, Mode mode, Status status) {
+    public ZookeeperInstance(String host, int port, Mode mode, Status status) {
         super(host, port);
-        this.id = id;
         this.mode = mode;
         this.status = status;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public Mode getMode() {
@@ -38,18 +32,19 @@ public class ZookeeperInstance extends SimpleInstance {
             return false;
         }
 
-        if (!super.equals(object)){ return false;}
+        if (!super.equals(object)) {
+            return false;
+        }
 
         ZookeeperInstance instance = (ZookeeperInstance) object;
 
-        return Objects.equals(id, instance.getId()) &&
-                Objects.equals(mode, instance.getMode()) &&
+        return Objects.equals(mode, instance.getMode()) &&
                 Objects.equals(status, instance.getStatus());
     }
 
     @Override
     public int hashCode() {
-        return 31 * super.hashCode() + Objects.hash(id, mode, status);
+        return 31 * super.hashCode() + Objects.hash(mode, status);
     }
 
 }
