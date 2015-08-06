@@ -19,11 +19,12 @@ public class ZNodeService {
     }
 
     public ZNode list(String path) {
+        path = resolvePath(path).orElse("/");
+
         try {
-            Optional<String> optionalPath = resolvePath(path);
-            return new ZNode(path, client.getChildren().forPath(optionalPath.orElse("/")));
+            return new ZNode(path, client.getChildren().forPath(path));
         } catch (Exception e) {
-            throw new ZookeeperException("Failed to load children for path " + path, e);
+            throw new ZookeeperException("Failed to load children for path: " + path, e);
         }
     }
 
@@ -32,6 +33,10 @@ public class ZNodeService {
 
         if (resolvedPath.isEmpty()) {
             return Optional.empty();
+        }
+
+        if (!resolvedPath.startsWith("/")) {
+            resolvedPath = "/" + resolvedPath;
         }
 
         return Optional.of(resolvedPath);
@@ -45,7 +50,7 @@ public class ZNodeService {
                 client.create().creatingParentsIfNeeded().inBackground().forPath(path);
             }
         } catch (Exception e) {
-            throw new ZookeeperException("Failed to create path " + path, e);
+            throw new ZookeeperException("Failed to create path: " + path, e);
         }
     }
 
@@ -53,15 +58,17 @@ public class ZNodeService {
         try {
             client.setData().inBackground().forPath(path, data.getBytes());
         } catch (Exception e) {
-            throw new ZookeeperException("Failed to create path " + path, e);
+            throw new ZookeeperException("Failed to create path: " + path, e);
         }
     }
 
     public String getData(String path) {
+        path = resolvePath(path).orElse("/");
+
         try {
             return new String(client.getData().forPath(path));
         } catch (Exception e) {
-            throw new ZookeeperException("Failed to load data for path " + path, e);
+            throw new ZookeeperException("Failed to load data for path: " + path, e);
         }
     }
 
@@ -69,7 +76,7 @@ public class ZNodeService {
         try {
             client.delete().inBackground().forPath(path);
         } catch (Exception e) {
-            throw new ZookeeperException("Failed to create path " + path, e);
+            throw new ZookeeperException("Failed to delete path: " + path, e);
         }
     }
 

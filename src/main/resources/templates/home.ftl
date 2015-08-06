@@ -55,10 +55,6 @@
                                 </#switch>
                                 <div class="${infoClass}">${zkHost.status}</div>
                                 <div>
-                                    <div class="col-sm-6">Zookeeper ID</div>
-                                    <div class="col-sm-4">${zkHost.id}</div>
-                                </div>
-                                <div>
                                     <div class="col-sm-6">Role</div>
                                     <div class="col-xs-4">${zkHost.mode}</div>
                                 </div>
