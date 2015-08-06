@@ -9,39 +9,44 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CommandResponse {
 
     private static final Logger LOG = LoggerFactory.getLogger(CommandResponse.class);
+    static final String UNSTABLE_SERVER_MESSAGE = "not currently serving";
 
     private final String response;
     private final ResponseStatus status;
 
     CommandResponse(ResponseStatus status, String response) {
         this.status = status;
-        this.response = response;
+        this.response = Strings.nullToEmpty(response);
     }
 
-    static final CommandResponse ok(String response) {
+    static CommandResponse ok(String response) {
         return new CommandResponse(ResponseStatus.OK, response);
     }
 
-    static final CommandResponse timeout() {
+    static CommandResponse timeout() {
         return new CommandResponse(ResponseStatus.TIMEOUT, null);
     }
 
-    static final CommandResponse error() {
+    static CommandResponse error() {
         return new CommandResponse(ResponseStatus.CONNECTION_ERROR, null);
     }
 
-    static final CommandResponse ioError() {
+    static CommandResponse ioError() {
         return new CommandResponse(ResponseStatus.IO_ERROR, null);
     }
 
-    public ResponseStatus getStatus(){
+    public boolean isOk() {
+        return status == ResponseStatus.OK;
+    }
+
+    public ResponseStatus getStatus() {
         return status;
     }
 
@@ -50,45 +55,29 @@ public class CommandResponse {
     }
 
     public Map<String, String> getResponseMap() {
-        List<String> lines = getLines(this.response);
-        Map<String, String> responseMap = new HashMap<>(lines.size() * 2);
-
-        for (String line : lines) {
-            int colonIndex = line.indexOf(':');
-
-            if (colonIndex > 0) {
-                String key = line.substring(0, colonIndex);
-                String value = "";
-                boolean hasValue = (colonIndex + 1) < line.length();
-
-                if(hasValue){
-                    value = line.substring(colonIndex + 1);
-                }
-
-                responseMap.put(key, value);
-            }
-        }
-
-        return responseMap;
-    }
-
-    public boolean isOk(){
-        return status == ResponseStatus.OK;
+        return getLines(this.response)
+                .stream()
+                .filter(this::isValidLine)
+                .map(this::lineToTuple)
+                .collect(Collectors.toMap(Tuple::getKey, Tuple::getValue));
     }
 
     private List<String> getLines(String response) {
-        List<String> lines = new ArrayList<String>();
-        BufferedReader reader = new BufferedReader(new StringReader(response));
-        String line = null;
+        List<String> lines = new ArrayList<>();
 
         // Zookeeper down, return down state
-        if(response.contains("not currently serving")){
+        if (response.contains(UNSTABLE_SERVER_MESSAGE) || response.trim().isEmpty()) {
             lines.add("status:" + Status.UNSTABLE.name());
         } else {
             lines.add("status:" + Status.LIVE.name());
         }
 
-        try {
+        if(response.isEmpty()){
+            return lines;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new StringReader(response))){
+            String line;
             while ((line = reader.readLine()) != null) {
 
                 if (Strings.isNullOrEmpty(line)) {
@@ -103,6 +92,38 @@ public class CommandResponse {
         }
 
         return lines;
+    }
+
+    private boolean isValidLine(String line) {
+        int colonIndex = line.indexOf(':');
+
+        return colonIndex > 0 && (colonIndex + 1) < line.length();
+    }
+
+    private Tuple<String, String> lineToTuple(String line) {
+        int colonIndex = line.indexOf(':');
+        String key = line.substring(0, colonIndex);
+        String value = line.substring(colonIndex + 1);
+
+        return new Tuple<>(key, value);
+    }
+
+    private static class Tuple<K, V> {
+        private final K key;
+        private final V value;
+
+        public Tuple(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public V getValue() {
+            return value;
+        }
     }
 
 }
