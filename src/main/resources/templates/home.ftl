@@ -27,7 +27,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Instances <span class="sr-only">(current)</span></a></li>
-                        <li><a href="/nodes">Nodes</a></li>
+                        <li><a href="/znodes">Nodes</a></li>
                     </ul>
                 </div>
             </div>
