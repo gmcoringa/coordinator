@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class InstanceService {
@@ -21,12 +21,10 @@ public class InstanceService {
     }
 
     public Set<ZookeeperInstance> getClusterState() {
-        Set<ZookeeperInstance> clusterState = new HashSet<>(instances.size() * 2);
+        return instances
+                .stream()
+                .map(instance -> commandService.getStatus(instance.getHost(), instance.getPort()))
+                .collect(Collectors.toSet());
 
-        for (SimpleInstance simpleInstance : instances) {
-            clusterState.add(commandService.getStatus(simpleInstance.getHost(), simpleInstance.getPort()));
-        }
-
-        return clusterState;
     }
 }

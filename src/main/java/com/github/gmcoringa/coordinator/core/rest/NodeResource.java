@@ -20,8 +20,6 @@ public class NodeResource {
 
     private final ZNodeService zNodeService;
     static final String PATH = "/api/node";
-    private static final String CONTENT_TYPE_JSON = "application/json";
-    private static final String CONTENT_TYPE_TEXT = " text/plain";
 
     @Autowired
     public NodeResource(ZNodeService zNodeService) {
@@ -38,13 +36,13 @@ public class NodeResource {
         return zNodeService.list(null);
     }
 
-    @RequestMapping(value = "/**", method = RequestMethod.POST, consumes = CONTENT_TYPE_TEXT)
+    @RequestMapping(value = "/**", method = RequestMethod.POST, consumes = ContentType.TEXT)
     @ResponseStatus(HttpStatus.CREATED)
     public void create(HttpServletRequest request, @RequestBody String data) {
         zNodeService.create(extractSubPath(request), Optional.ofNullable(data));
     }
 
-    @RequestMapping(value = "/**", method = RequestMethod.PUT, consumes = CONTENT_TYPE_TEXT)
+    @RequestMapping(value = "/**", method = RequestMethod.PUT, consumes = ContentType.TEXT)
     public void updateContent(HttpServletRequest request, @RequestBody String data) {
         zNodeService.updateContent(extractSubPath(request), data);
     }
@@ -54,7 +52,7 @@ public class NodeResource {
         zNodeService.delete(extractSubPath(request));
     }
 
-    @RequestMapping(value = "/**", method = RequestMethod.GET, produces = CONTENT_TYPE_JSON)
+    @RequestMapping(value = "/**", method = RequestMethod.GET, produces = ContentType.JSON)
     public String getContent(HttpServletRequest request) {
         return zNodeService.getData(extractSubPath(request));
     }
