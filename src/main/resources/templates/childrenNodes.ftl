@@ -1,8 +1,13 @@
 <#list node.getChildren() as child>
     <li>
-        <#assign childPath = node.getPath() + "/" + child />
-        <input type="checkbox" id="${childPath}" />
-        <label for="${childPath}">${child}</label>
-        <ul></ul>
+        <#if node.getPath() = "/">
+            <#assign childPath = "/" + child />
+        <#else>
+            <#assign childPath = node.getPath() + "/" + child />
+        </#if>
+        <a class="node" href="#" data-path="${childPath}" onclick="toggleNode(this)">
+            <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> ${child}
+        </a>
+        <ul class="nav nav-list tree" style="display: none;"></ul>
     </li>
 </#list>
