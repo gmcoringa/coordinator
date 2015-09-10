@@ -74,7 +74,7 @@ public class ZNodeService {
 
     public void delete(String path) {
         try {
-            client.delete().inBackground().forPath(path);
+            client.delete().deletingChildrenIfNeeded().inBackground().forPath(path);
         } catch (Exception e) {
             throw new ZookeeperException("Failed to delete path: " + path, e);
         }

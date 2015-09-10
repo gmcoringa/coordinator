@@ -38,7 +38,7 @@ public class NodeResource {
 
     @RequestMapping(value = "/**", method = RequestMethod.POST, consumes = ContentType.TEXT)
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(HttpServletRequest request, @RequestBody String data) {
+    public void create(HttpServletRequest request, @RequestBody(required = false) String data) {
         zNodeService.create(extractSubPath(request), Optional.ofNullable(data));
     }
 
