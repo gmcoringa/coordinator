@@ -13,3 +13,8 @@
 .nav-list-main a{
     color: #888;
 }
+
+a.active{
+    font-weight: bold;
+    background-color: gainsboro;
+}

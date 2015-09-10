@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <#include "header.ftl">
         <title>Coordinator</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -27,7 +23,6 @@
         </nav>
 
         <div class="container">
-            <div class="jumbotron"></div>
             <div class="row row-offcanvas row-offcanvas-right">
                 <#list hosts as zkHost>
                 <div class="row">
