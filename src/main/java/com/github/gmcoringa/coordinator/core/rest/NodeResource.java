@@ -52,7 +52,7 @@ public class NodeResource {
         zNodeService.delete(extractSubPath(request));
     }
 
-    @RequestMapping(value = "/**", method = RequestMethod.GET, produces = ContentType.JSON)
+    @RequestMapping(value = "/**", method = RequestMethod.GET, produces = ContentType.TEXT)
     public String getContent(HttpServletRequest request) {
         return zNodeService.getData(extractSubPath(request));
     }

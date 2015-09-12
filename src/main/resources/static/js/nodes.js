@@ -1,6 +1,14 @@
 RENDER_URL_PATH = "/znodes/render/children?node=";
 NODE_PREFIX = "/api/node";
 
+function showError(message, details){
+    var modal = jQuery("#alert-error-modal");
+
+    jQuery("#error-message").html(message);
+    jQuery("#error-detail").html(details);
+    modal.modal('show');
+}
+
 function toggleNode(source){
     var node = jQuery(source);
     var isNotLoaded = node.data("loaded") != "true";
@@ -28,7 +36,7 @@ function loadChildren(node){
     });
 
     request.fail(function(jqXHR, textStatus, errorThrown){
-        alert(textStatus);
+        showError(textStatus, errorThrown);
     });
 
     node.data("loaded", "true");
@@ -56,7 +64,7 @@ function createNode(){
     });
 
     request.fail(function(jqXHR, textStatus, errorThrown){
-        alert(textStatus);
+        showError(textStatus, errorThrown);
     });
 }
 
@@ -81,10 +89,78 @@ function doDeleteNode(){
     });
 
     request.fail(function(jqXHR, textStatus, errorThrown){
-        alert(textStatus);
+        showError(textStatus, errorThrown);
     });
 }
 
 function viewNodeContent(){
-    alert("TODO");
+    var node = jQuery("a.active", jQuery("#znodes"));
+    var url = NODE_PREFIX + node.data("path");
+
+    var request = jQuery.ajax({
+        url: url,
+        accepts: {
+            text: 'text/plain'
+        }
+    });
+
+    request.done(function(response){
+        getOrCreateContentEditor().setValue(response);
+        jQuery("#node-edit-modal").modal('show');
+    });
+
+    request.fail(function(jqXHR, textStatus, errorThrown){
+        showError(textStatus, errorThrown);
+    });
 }
+
+function updateNode(){
+    var node = jQuery("a.active", jQuery("#znodes"));
+    var url = NODE_PREFIX + node.data("path");
+    var content =  getOrCreateContentEditor().getValue();
+
+    var request = jQuery.ajax({
+        url: url,
+        method: 'PUT',
+        data: content,
+        contentType: "text/plain"
+    });
+
+    request.done(function(response){
+        jQuery("#node-edit-modal").modal('hide');
+    });
+
+    request.fail(function(jqXHR, textStatus, errorThrown){
+        showError(textStatus, errorThrown);
+    });
+}
+
+function getOrCreateContentEditor(){
+    if(typeof EDITOR === "undefined"){
+        EDITOR = CodeMirror.fromTextArea(
+            document.getElementById("update-node-content"),
+            {
+                lineNumbers: true,
+                autofocus: true,
+                mode: "text/x-properties"
+            }
+        );
+    }
+
+    return EDITOR;
+}
+
+// Workaround to display editor content
+jQuery( document ).ready(function() {
+    jQuery('#node-edit-modal').on('shown.bs.modal', function (e) {
+        getOrCreateContentEditor().refresh();
+    });
+
+    jQuery('#node-edit-modal').on('hide.bs.modal', function (e) {
+        var editor = getOrCreateContentEditor();
+
+        editor.setValue("");
+        editor.clearHistory();
+        editor.refresh();
+    });
+});

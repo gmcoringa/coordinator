@@ -4,6 +4,7 @@
     <#include "header.ftl">
     <title>Coordinator - Nodes</title>
     <link href="css/node.css" rel="stylesheet">
+    <link href="css/codemirror.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -89,8 +90,49 @@
         </div>
     </div>
 
+    <div id="node-edit-modal" class="modal fade edit-node-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">View / Modify Node</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea id="update-node-content"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="updateNode();">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alert-error-modal" class="modal fade alert-error-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Something goes wrong</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <h4 id="error-message"></h4>
+                        <p id="error-detail"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" onclick="doDeleteNode();">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/nodes.js"></script>
+    <script src="js/codemirror.js"></script>
+    <script src="js/properties.js"></script>
 </body>
 </html>
