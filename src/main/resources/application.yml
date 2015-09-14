@@ -8,7 +8,7 @@ zookeeper:
     retries: 3
     timeoutMS: 5000
   session:
-    timeout: 60000
+    timeoutMS: 60000
 
 ---
 spring:
@@ -16,4 +16,3 @@ spring:
 
 zookeeper:
   hosts: localhost:2181
-
