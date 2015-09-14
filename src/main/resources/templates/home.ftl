@@ -24,35 +24,43 @@
 
         <div class="container">
             <div class="row row-offcanvas row-offcanvas-right">
-                <#list hosts as zkHost>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <p><h2>${zkHost.connectionString}</h2></p>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <#switch zkHost.status>
-                                    <#case "LIVE">
-                                        <#assign infoClass="label label-success"/>
-                                        <#break>
-                                    <#case "UNSTABLE">
-                                        <#assign infoClass="label label-warning"/>
-                                        <#break>
-                                    <#case "DEAD">
-                                        <#assign infoClass="label label-danger"/>
-                                        <#break>
-                                </#switch>
-                                <div class="${infoClass}">${zkHost.status}</div>
-                                <div>
-                                    <div class="col-sm-6">Role</div>
-                                    <div class="col-xs-4">${zkHost.mode}</div>
-                                </div>
-                            </div> <#-- col-xs-2 col-md-6 -->
-                        </div><#-- row -->
-                    </div><#-- col-sm-4 -->
-                </div><#-- row -->
-                </#list>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Zookeeper Instances</div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Instance</th>
+                                <th>State</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <#list hosts as zkHost>
+                            <tr>
+                                <th><span>${zkHost.connectionString}</span></th>
+                                <th><@getStatusLabel zkHost.status/></th>
+                                <th><span>${zkHost.mode}</span></th>
+                            </tr>
+                        </#list>
+                        </tbody>
+                    </table>
+                </div>
             </div><#-- row canvas -->
         </div><#-- container -->
-
     </body>
+
+    <#macro getStatusLabel status>
+        <#switch status>
+            <#case "LIVE">
+                <div class="label label-success">${status}</div>
+                <#break>
+            <#case "UNSTABLE">
+                <div class="label label-warning">${status}</div>
+                <#break>
+            <#case "DEAD">
+            <#default>
+                <div class="label label-danger">${status}</div>
+                <#break>
+        </#switch>
+    </#macro>
 </html>
