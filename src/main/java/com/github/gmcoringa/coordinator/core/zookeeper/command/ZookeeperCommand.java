@@ -22,7 +22,7 @@ public class ZookeeperCommand {
     private final int timeoutMS;
 
     @Autowired
-    public ZookeeperCommand(@Value("${zookeeper.connection.timeoutMS:15000}") int timeout) {
+    ZookeeperCommand(@Value("${zookeeper.connection.timeoutMS:15000}") int timeout) {
         this.timeoutMS = timeout;
     }
 

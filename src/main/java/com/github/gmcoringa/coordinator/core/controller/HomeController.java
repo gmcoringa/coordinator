@@ -14,7 +14,7 @@ public class HomeController {
     private final InstanceService instanceService;
 
     @Autowired
-    public HomeController(InstanceService instanceService) {
+    HomeController(InstanceService instanceService) {
         this.instanceService = instanceService;
     }
 

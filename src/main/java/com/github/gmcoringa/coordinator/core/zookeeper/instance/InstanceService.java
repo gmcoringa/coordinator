@@ -15,7 +15,7 @@ public class InstanceService {
     private final CommandService commandService;
 
     @Autowired
-    public InstanceService(@Value("${zookeeper.hosts}") String connectionString, CommandService commandService) {
+    InstanceService(@Value("${zookeeper.hosts}") String connectionString, CommandService commandService) {
         instances = ZookeeperInstanceFactory.createSimpleInstances(connectionString);
         this.commandService = commandService;
     }

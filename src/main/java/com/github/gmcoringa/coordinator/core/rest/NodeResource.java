@@ -22,7 +22,7 @@ public class NodeResource {
     static final String PATH = "/api/node";
 
     @Autowired
-    public NodeResource(ZNodeService zNodeService) {
+    NodeResource(ZNodeService zNodeService) {
         this.zNodeService = zNodeService;
     }
 

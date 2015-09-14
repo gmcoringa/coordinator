@@ -11,15 +11,20 @@ import org.springframework.context.annotation.Configuration;
 public class CuratorClientFactory {
 
     @Bean
-    public CuratorFramework client(@Value("${zookeeper.hosts}") String hosts,
-                                   @Value("${zookeeper.connection.retries:3}") int retries,
-                                   @Value("${zookeeper.connection.timeoutMS:15000}") int connectionTimeout,
-                                   @Value("${zookeeper.session.timeout:60000}") int sessionTimeout) {
+    CuratorFramework client(@Value("${zookeeper.hosts}") String hosts,
+                            @Value("${zookeeper.connection.retries:3}") int retries,
+                            @Value("${zookeeper.connection.timeoutMS:15000}") int connectionTimeout,
+                            @Value("${zookeeper.session.timeoutMS:60000}") int sessionTimeout) {
 
         ExponentialBackoffRetry retryPolicy = new ExponentialBackoffRetry(1000, retries);
 
-        CuratorFramework client = CuratorFrameworkFactory.builder().connectString(hosts).retryPolicy(retryPolicy)
-                .connectionTimeoutMs(connectionTimeout).sessionTimeoutMs(sessionTimeout).build();
+        CuratorFramework client = CuratorFrameworkFactory
+                .builder()
+                .connectString(hosts)
+                .retryPolicy(retryPolicy)
+                .connectionTimeoutMs(connectionTimeout)
+                .sessionTimeoutMs(sessionTimeout)
+                .build();
 
         client.start();
 

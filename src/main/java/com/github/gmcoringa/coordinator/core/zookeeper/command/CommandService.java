@@ -13,7 +13,7 @@ public class CommandService {
     private final ZookeeperCommand command;
 
     @Autowired
-    public CommandService(ZookeeperCommand command) {
+    CommandService(ZookeeperCommand command) {
         this.command = command;
     }
 

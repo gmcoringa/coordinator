@@ -14,7 +14,7 @@ public class ZNodeService {
     private final CuratorFramework client;
 
     @Autowired
-    public ZNodeService(CuratorFramework client) {
+    ZNodeService(CuratorFramework client) {
         this.client = client;
     }
 
