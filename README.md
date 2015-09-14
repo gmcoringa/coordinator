@@ -22,7 +22,7 @@ SPRING_PROFILES_ACTIVE="development" java -jar build/libs/coordinator-$VERSION.j
 
 ## Configuration
 
-As Spring Boot the entire application.yml que be replaced by an external file.
+As this project uses Spring Boot the entire application.yml que be replaced by an external file.
 
 - **zookeeper.hosts**: Zookeeper connection string, format ``host:port``, required. For production profile can be set with ``ZK_QUORUM`` environment variable.
 - **zookeeper.connection.retries** : Number of connections retries before giving up, default 3.
