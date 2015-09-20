@@ -64,5 +64,7 @@ configurations {
 }
 
 // Run - default configuration
-applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005",
-                "-Dspring.profiles.active=development"]
+applicationDefaultJvmArgs = [
+        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005",
+        "-Dspring.profiles.active=development"
+    ]

@@ -1,4 +1,4 @@
-# Coordinator
+# Coordinator [![Build Status](https://travis-ci.org/gmcoringa/coordinator.svg)](https://travis-ci.org/gmcoringa/coordinator)
 
 This project provides Zookeeper node tree navigation, content visualization and content modification. Also displays Zookeeper cluster state.
 
