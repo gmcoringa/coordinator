@@ -8,24 +8,36 @@ buildscript {
 
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${SPRING_BOOT_VERSION}")
+        classpath 'net.researchgate:gradle-release:2.2.2'
     }
 }
 
-apply plugin: "idea"
+apply plugin: 'idea'
 apply plugin: 'java'
-apply plugin: 'eclipse-wtp'
 apply plugin: 'spring-boot'
+
+// Release specific configurations
+if(project.hasProperty("RELEASE")) {
+     apply from: "$rootDir/publication.gradle" 
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-group = 'gmcoringa-coordinator'
-version = '0.0.1'
+group = 'com.github.gmcoringa'
 archivesBaseName = 'coordinator'
 
 repositories {
     mavenLocal()
     mavenCentral()
+}
+
+idea {
+    module {
+        jdkName = sourceCompatibility
+        downloadJavadoc = true
+        downloadSources = false
+    }
 }
 
 // Dependencies
@@ -34,6 +46,7 @@ def SLF4J = "org.slf4j:slf4j-api:1.7.10"
 List SPRING = ["org.springframework.boot:spring-boot-starter-web:${SPRING_BOOT_VERSION}",
                "org.springframework.boot:spring-boot-starter-undertow:${SPRING_BOOT_VERSION}",
                "org.springframework.boot:spring-boot-starter-freemarker:${SPRING_BOOT_VERSION}"]
+def CURATOR = 'org.apache.curator:curator-framework:2.7.1'
 List TEST = ["junit:junit:4.12", "org.mockito:mockito-core:1.10.19",
              "org.springframework.boot:spring-boot-starter-test:${SPRING_BOOT_VERSION}"]
 List LOGBACK = ["ch.qos.logback:logback-classic:1.1.2", "ch.qos.logback:logback-core:1.1.2"]
@@ -41,7 +54,7 @@ List LOGBACK = ["ch.qos.logback:logback-classic:1.1.2", "ch.qos.logback:logback-
 // Project definition
 
 dependencies {
-    compile SPRING, SLF4J, 'org.apache.curator:curator-framework:2.7.1'
+    compile SPRING, SLF4J, CURATOR
     runtime LOGBACK
     testCompile TEST
 }

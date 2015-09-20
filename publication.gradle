@@ -1,0 +1,69 @@
+// Publication definitions
+apply plugin: 'signing'
+apply plugin: 'maven'
+apply plugin: 'net.researchgate.release'
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Zookeeper Coordinator'
+                packaging 'jar'
+                description 'Zookeeper node tree navigation, content visualization and content modification. Also displays Zookeeper cluster state.'
+                url 'http://www.example.com/example-application'
+
+                scm {
+                    connection 'git@github.com:gmcoringa/coordinator.git'
+                    developerConnection 'git@github.com:gmcoringa/coordinator.git'
+                    url 'https://github.com/gmcoringa/coordinator'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'gmcoringa'
+                        name 'Fabiano V. Santos'
+                        email 'santos.fabianov@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Automatic publication on release
+afterReleaseBuild.dependsOn uploadArchives
