@@ -7,5 +7,4 @@ deploy:
   on:
     branch: master
 before_install:
-- openssl aes-256-cbc -K $encrypted_bbd23b44a345_key -iv $encrypted_bbd23b44a345_iv
-  -in secring.gpg.enc -out ext/secring.gpg -d
+  - openssl aes-256-cbc -K $encrypted_bbd23b44a345_key -iv $encrypted_bbd23b44a345_iv -in ext/secring.gpg.enc -out ext/secring.gpg -d

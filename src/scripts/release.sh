@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 function info {
@@ -7,6 +6,14 @@ function info {
 }
 
 info "Starting Coodinator Release"
-gradle release -Prelease.useAutomaticVersion=true -x test -PRELEASE
+gradle release \
+    -Prelease.useAutomaticVersion=true \
+    -PRELEASE \
+    -Psigning.keyId=$SIGNING_KEY \
+    -Psigning.password=$SIGNING_PASS \
+    -Psigning.secretKeyRingFile=ext/secring.gpg \
+    -PossrhUsername=$OSSRH_USER \
+    -PossrhPassword=$OSSRH_PASS \
+    -x test
 
 info "Done!"
