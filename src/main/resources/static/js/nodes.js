@@ -32,7 +32,7 @@ function loadChildren(node){
     });
 
     request.done(function(response){
-        node.siblings("ul").append(response);
+        node.siblings("ul").html(response);
     });
 
     request.fail(function(jqXHR, textStatus, errorThrown){
