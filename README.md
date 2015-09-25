@@ -30,3 +30,4 @@ As this project uses Spring Boot the entire application.yml que be replaced by a
 - **zookeeper.session.timeoutMS**: Session timeout in miliseconds, default 60000.
 
 The Zookeeper connection statregy ``ExponentialBackoffRetry`` with a base sleep time of 1000 miliseconds.
+  
