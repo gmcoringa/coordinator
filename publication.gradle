@@ -38,7 +38,7 @@ uploadArchives {
                 name 'Zookeeper Coordinator'
                 packaging 'jar'
                 description 'Zookeeper node tree navigation, content visualization and content modification. Also displays Zookeeper cluster state.'
-                url 'http://www.example.com/example-application'
+                url 'https://github.com/gmcoringa/coordinator'
 
                 scm {
                     connection 'git@github.com:gmcoringa/coordinator.git'
