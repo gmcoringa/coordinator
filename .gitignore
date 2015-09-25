@@ -22,3 +22,6 @@ out/
 
 # Vim ignore files
 *.swp
+
+ext/secring.gpg
+
