@@ -67,3 +67,7 @@ uploadArchives {
 
 // Automatic publication on release
 afterReleaseBuild.dependsOn uploadArchives
+
+release {
+    preCommitText = '[ci skip]'
+}
