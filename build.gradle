@@ -40,6 +40,14 @@ idea {
     }
 }
 
+bootRepackage {
+    classifier = 'assembly'
+}
+
+springBoot {
+    backupSource = false
+}
+
 // Dependencies
 def SPRING_BOOT_VERSION = "1.2.3.RELEASE"
 def SLF4J = "org.slf4j:slf4j-api:1.7.10"
