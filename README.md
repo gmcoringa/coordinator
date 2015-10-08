@@ -28,6 +28,7 @@ As this project uses Spring Boot the entire application.yml que be replaced by a
 - **zookeeper.connection.retries** : Number of connections retries before giving up, default 3.
 - **zookeeper.connection.timeoutMS**: Connection timeout in miliseconds, default 5000.
 - **zookeeper.session.timeoutMS**: Session timeout in miliseconds, default 60000.
+- **zookeeper.cache.instancesTimeoutMS**: Cluster state cache timeout in miliseconds, default 60000.
 
 The Zookeeper connection statregy ``ExponentialBackoffRetry`` with a base sleep time of 1000 miliseconds.
   
