@@ -9,6 +9,8 @@ zookeeper:
     timeoutMS: 5000
   session:
     timeoutMS: 60000
+  cache:
+    instancesTimeoutMS: 60000
 
 ---
 spring:
