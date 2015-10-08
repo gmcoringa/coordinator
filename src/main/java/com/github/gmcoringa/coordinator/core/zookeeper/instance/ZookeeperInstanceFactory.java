@@ -9,7 +9,6 @@ import java.util.Set;
 
 public class ZookeeperInstanceFactory {
 
-
     public static ZookeeperInstance createFromStatusResponseMap(String host, int port, Map<String, String> response) {
         Mode mode = Mode.valueOf(response.getOrDefault("Mode", "unknown").toUpperCase().trim());
         Status status = Status.valueOf(response.getOrDefault("status", Status.UNSTABLE.name()).toUpperCase().trim());

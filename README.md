@@ -17,7 +17,7 @@ Running the generated jar:
 
 ```shell
 gradle build
-SPRING_PROFILES_ACTIVE="development" java -jar build/libs/coordinator-$VERSION.jar
+SPRING_PROFILES_ACTIVE="development" java -jar build/libs/coordinator-$VERSION-assembly.jar
 ```
 
 ## Configuration
