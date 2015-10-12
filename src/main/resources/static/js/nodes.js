@@ -93,8 +93,16 @@ function doDeleteNode(){
     });
 }
 
+function displayNodeContent(source){
+    doViewNodeContent(jQuery(source));
+}
+
 function viewNodeContent(){
     var node = jQuery("a.active", jQuery("#znodes"));
+    doViewNodeContent(node);
+}
+
+function doViewNodeContent(node){
     var url = NODE_PREFIX + node.data("path");
 
     var request = jQuery.ajax({

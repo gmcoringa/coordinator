@@ -5,7 +5,7 @@
         <#else>
             <#assign childPath = node.getPath() + "/" + child />
         </#if>
-        <a href="#" data-path="${childPath}" onclick="toggleNode(this)">
+        <a href="#" data-path="${childPath}" onclick="toggleNode(this)" ondblclick="displayNodeContent(this)">
             <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> ${child}
         </a>
         <ul class="nav nav-list tree" style="display: none;"></ul>
