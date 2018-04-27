@@ -36,7 +36,7 @@ function loadChildren(node){
     });
 
     request.fail(function(jqXHR, textStatus, errorThrown){
-        showError(textStatus, errorThrown);
+        showError(errorThrown, jqXHR.responseText);
     });
 
     node.data("loaded", "true");
@@ -48,6 +48,11 @@ function createNode(){
     var content = jQuery('#node-content', modal);
     var parentNode = jQuery("a.active", jQuery("#znodes"));
     var url = NODE_PREFIX + parentNode.data("path") + "/" + name.val();
+
+    if(typeof parentNode.data("path") == 'undefined'){
+        showError("Parent not selected", "Select a valid parent node to create a new node");
+        return;
+    }
 
     var request = jQuery.ajax({
         url: url,
@@ -64,7 +69,7 @@ function createNode(){
     });
 
     request.fail(function(jqXHR, textStatus, errorThrown){
-        showError(textStatus, errorThrown);
+        showError(errorThrown, jqXHR.responseText);
     });
 }
 
@@ -89,7 +94,7 @@ function doDeleteNode(){
     });
 
     request.fail(function(jqXHR, textStatus, errorThrown){
-        showError(textStatus, errorThrown);
+        showError(errorThrown, jqXHR.responseText);
     });
 }
 
@@ -118,7 +123,7 @@ function doViewNodeContent(node){
     });
 
     request.fail(function(jqXHR, textStatus, errorThrown){
-        showError(textStatus, errorThrown);
+        showError(errorThrown, jqXHR.responseText);
     });
 }
 
@@ -139,7 +144,7 @@ function updateNode(){
     });
 
     request.fail(function(jqXHR, textStatus, errorThrown){
-        showError(textStatus, errorThrown);
+        showError(errorThrown, jqXHR.responseText);
     });
 }
 

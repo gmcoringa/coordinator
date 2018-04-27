@@ -10,13 +10,13 @@ Run can be simple as that:
 
 ```shell
 # By default enables debug on port 5005 and enables development profile
-gradle run
+./gradlew run
 ``` 
 
 Running the generated jar:
 
 ```shell
-gradle build
+./gradlew build
 SPRING_PROFILES_ACTIVE="development" java -jar build/libs/coordinator-$VERSION-assembly.jar
 ```
 
