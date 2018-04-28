@@ -37,7 +37,14 @@
 
         <div>
             <ul id="znodes" class="nav nav-list-main">
-                <#include "childrenNodes.ftl" >
+                <li>
+                    <a href="#" data-path="" onclick="toggleNode(this)">
+                        <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> root
+                    </a>
+                    <ul id="znodes" class="nav nav-list tree">
+                        <#include "childrenNodes.ftl" >
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -123,7 +130,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" onclick="doDeleteNode();">Delete</button>
                 </div>
             </div>
         </div>
