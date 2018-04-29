@@ -18,27 +18,28 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="/">Instances</a></li>
-                    <li class="active"><a href="#">Nodes <span class="sr-only">(current)</span></a></li>
+                    <li class="active"><a>Nodes <span class="sr-only">(current)</span></a></li>
                 </ul>
             </div>
+
+            <!-- Znodes actions -->
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="node-menu-nav-bar">
+                        <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target=".new-node-modal">New</button>
+                        <button type="button" class="btn btn-primary navbar-btn" onclick="deleteNode();">Delete</button>
+                        <button type="button" class="btn btn-primary navbar-btn" onclick="viewNodeContent();">View / Modify</button>
+                    </div>
+                </div>
+            </nav>
         </div>
     </nav>
 
     <div class="container">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="node-menu-nav-bar">
-                    <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target=".new-node-modal">New</button>
-                    <button type="button" class="btn btn-primary navbar-btn" onclick="deleteNode();">Delete</button>
-                    <button type="button" class="btn btn-primary navbar-btn" onclick="viewNodeContent();">View / Modify</button>
-                </div>
-            </div>
-        </nav>
-
         <div>
             <ul id="znodes" class="nav nav-list-main">
                 <li>
-                    <a href="#" data-path="" onclick="toggleNode(this)">
+                    <a data-path="" onclick="toggleNode(this)">
                         <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> root
                     </a>
                     <ul id="znodes" class="nav nav-list tree">

@@ -167,6 +167,7 @@ function getOrCreateContentEditor(){
 jQuery( document ).ready(function() {
     jQuery('#node-edit-modal').on('shown.bs.modal', function (e) {
         getOrCreateContentEditor().refresh();
+        jQuery("#node-name").focus();
     });
 
     jQuery('#node-edit-modal').on('hide.bs.modal', function (e) {
@@ -175,5 +176,9 @@ jQuery( document ).ready(function() {
         editor.setValue("");
         editor.clearHistory();
         editor.refresh();
+    });
+
+    jQuery('#node-create-modal').on('shown.bs.modal', function (e) {
+        jQuery("#node-name").focus();
     });
 });
