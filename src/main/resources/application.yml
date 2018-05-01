@@ -2,6 +2,12 @@ spring:
   application:
     name: Coordinator
 
+auth:
+  enabled: false
+  user:
+    name: admin
+    password: admin
+
 zookeeper:
   hosts: ${ZK_QUORUM}
   connection:
