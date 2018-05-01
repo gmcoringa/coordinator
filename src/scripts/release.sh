@@ -12,13 +12,13 @@ git checkout master
 git pull
 
 info "Performing Release"
-gradle release -Prelease.useAutomaticVersion=true -PRELEASE -x test
+./gradlew release -Prelease.useAutomaticVersion=true -PRELEASE -x test
 
 info "Publising Released version Artifacts"
 git fetch --tag
 TAG=`git describe --abbrev=0 --tags`
 git checkout tags/$TAG
-gradle clean build -x test
-gradle uploadArchives -PRELEASE -PPUBLISH -x test
+./gradlew clean build -x test
+./gradlew uploadArchives -PRELEASE -PPUBLISH -x test
 
 info "Release Complete!"
