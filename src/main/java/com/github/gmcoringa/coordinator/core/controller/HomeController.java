@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class HomeController {
 
-    private final InstanceService instanceService;
+	private final InstanceService instanceService;
 
-    @Autowired
-    HomeController(InstanceService instanceService) {
-        this.instanceService = instanceService;
-    }
+	@Autowired
+	HomeController(InstanceService instanceService) {
+		this.instanceService = instanceService;
+	}
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String home(Model model) {
-        model.addAttribute("hosts", instanceService.getClusterState());
-        return "home";
-    }
+	@RequestMapping(method = RequestMethod.GET)
+	public String home(Model model) {
+		model.addAttribute("hosts", instanceService.getClusterState());
+		return "home";
+	}
 }

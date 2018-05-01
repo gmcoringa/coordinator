@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/znodes")
 public class ZNodeController {
 
-    private final ZNodeService zNodeService;
+	private final ZNodeService zNodeService;
 
-    @Autowired
-    ZNodeController(ZNodeService zNodeService){
-        this.zNodeService = zNodeService;
-    }
+	@Autowired
+	ZNodeController(ZNodeService zNodeService) {
+		this.zNodeService = zNodeService;
+	}
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String rootNodes(Model model) {
-        model.addAttribute("node", zNodeService.list("/"));
-        return "nodes";
-    }
+	@RequestMapping(method = RequestMethod.GET)
+	public String rootNodes(Model model) {
+		model.addAttribute("node", zNodeService.list("/"));
+		return "nodes";
+	}
 
-    @RequestMapping(method = RequestMethod.GET, value = "/render/children", produces = ContentType.TEXT)
-    public String renderChildren(Model model, @RequestParam("node") String node){
-        model.addAttribute("node", zNodeService.list(node));
-        return "childrenNodes";
-    }
+	@RequestMapping(method = RequestMethod.GET, value = "/render/children", produces = ContentType.TEXT)
+	public String renderChildren(Model model, @RequestParam("node") String node) {
+		model.addAttribute("node", zNodeService.list(node));
+		return "childrenNodes";
+	}
 }
